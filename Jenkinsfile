@@ -21,7 +21,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Controlla il codice sorgente dal repository
-                git branch: 'main', url: ' https://github.com/dariolad/laravelmail.git'
+                git branch: 'main', url: 'https://github.com/dariolad/laravelmail.git'
             }
         }
 
@@ -44,16 +44,14 @@ pipeline {
                 }
             }
         }
-
-        stage('Post') {
-            always {
-                // Archivia i risultati dei test e altri artefatti, se necessario
-                junit '**/storage/logs/laravel.log'  // Cambia il percorso in base ai tuoi log
-            }
-        }
     }
 
     post {
+        always {
+            // Archivia i risultati dei test e altri artefatti, se necessario
+            junit '**/storage/logs/laravel.log'  // Cambia il percorso in base ai tuoi log
+        }
+
         success {
             echo 'Tests passed successfully!'
         }
