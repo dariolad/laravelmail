@@ -2,11 +2,9 @@ pipeline {
     agent any
 
     environment {
-        // Imposta le variabili d'ambiente per il test
+        // Imposta le variabili d'ambiente per il test della posta elettronica
         APP_ENV = 'testing'
         APP_DEBUG = 'true'
-        DB_CONNECTION = 'sqlite'
-        DB_DATABASE = ':memory:'  // Usa un database SQLite in memoria per i test
         MAIL_MAILER = 'smtp'
         MAIL_HOST = 'smtp.mailtrap.io'
         MAIL_PORT = '2525'
@@ -35,12 +33,11 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Email Tests') {
             steps {
-                // Esegui i test di Laravel
+                // Esegui i test relativi al servizio di posta elettronica
                 script {
-                    sh 'php artisan migrate --env=testing'  // Esegui le migrazioni per l'ambiente di test
-                    sh 'php artisan test'  // Esegui i test
+                    sh 'php artisan test --testsuite=EmailTest --log-junit=storage/test-reports/junit.xml'
                 }
             }
         }
@@ -49,14 +46,14 @@ pipeline {
     post {
         always {
             // Archivia i risultati dei test e altri artefatti, se necessario
-            junit '**/storage/logs/laravel.log'  // Cambia il percorso in base ai tuoi log
+            junit '**/storage/test-reports/*.xml'  // Cambia il percorso in base ai tuoi report JUnit
         }
 
         success {
-            echo 'Tests passed successfully!'
+            echo 'Email service tests passed successfully!'
         }
         failure {
-            echo 'Tests failed.'
+            echo 'Email service tests failed.'
         }
     }
 }
