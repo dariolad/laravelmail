@@ -31,5 +31,6 @@ class EmailServiceTest extends TestCase
         // Aggiungi ulteriori assert se necessario per verificare che l'email
         // abbia le intestazioni corrette, il corpo, ecc.
         // test
+         // test
     }
 }
