@@ -30,7 +30,7 @@ pipeline {
                 // Installa le dipendenze PHP e Node.js (se necessario)
                 script {
                     sh 'composer install'
-                    sh 'npm install'  // Se usi npm per frontend, altrimenti puoi rimuovere questa linea
+                    
                 }
             }
         }
