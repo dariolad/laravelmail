@@ -33,11 +33,11 @@ pipeline {
             }
         }
 
-        stage('Run Email Tests') {
+        stage('Run Tests') {
             steps {
-                // Esegui i test relativi al servizio di posta elettronica
+                // Esegui i test e genera il report JUnit
                 script {
-                    sh 'php artisan test --testsuite=EmailTest --log-junit=storage/test-reports/junit.xml'
+                    sh 'php vendor/bin/phpunit --log-junit=storage/test-reports/junit.xml'
                 }
             }
         }
@@ -50,10 +50,10 @@ pipeline {
         }
 
         success {
-            echo 'Email service tests passed successfully!'
+            echo 'Tests passed successfully!'
         }
         failure {
-            echo 'Email service tests failed.'
+            echo 'Tests failed.'
         }
     }
 }
