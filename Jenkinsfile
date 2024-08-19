@@ -34,13 +34,11 @@ pipeline {
         }
 
         stage('Run Tests') {
-            steps {
-                // Esegui i test e genera il report JUnit
-                script {
-                    sh 'php vendor/bin/phpunit --log-junit=storage/test-reports/junit.xml'
-                }
-            }
-        }
+    steps {
+        sh 'php vendor/bin/phpunit --log-junit=storage/test-reports/junit.xml'
+    }
+}
+
     }
 
     post {
